@@ -29,14 +29,13 @@ export default function LoginPage() {
     e.preventDefault();
 
     setLoading(true);
-    const { error } =
-      await supabase.auth.signInWithPassword({email, password});
+    const { error } = await supabase.auth.signInWithPassword({email, password});
       setLoading(false);
       
       if(error)
         alert(error.message);
       else
-        router.push("/homepage"); 
+        router.push("/home"); 
   }
 
   //updates email state each time user types
@@ -54,7 +53,7 @@ export default function LoginPage() {
           </CardAction>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin}>
+          {/*<form onSubmit={handleLogin}>*/}
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -90,28 +89,29 @@ export default function LoginPage() {
                   />
               </div>
             </div>
-          </form>
         </CardContent>
-        <CardFooter className="flex-col gap-2">
-          <Button 
-            type="submit" 
-            className="w-full"
-            disabled={loading}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </Button>
-          <Button 
-            variant="outline" 
-            className="w-full"
-            onClick={async () => {
-              await supabase.auth.signInWithOAuth({
-                provider: "google",
-              });
-            }}
+        <form onSubmit={handleLogin}>
+          <CardFooter className="flex-col gap-2">
+            <Button 
+              type="submit" 
+              className="w-full"
+              disabled={loading}
             >
-            Login with Google
-          </Button>
-        </CardFooter>
+              {loading ? "Logging in..." : "Login"}
+            </Button>
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={async () => {
+                await supabase.auth.signInWithOAuth({
+                  provider: "google",
+                });
+              }}
+              >
+              Login with Google
+            </Button>
+          </CardFooter>
+          </form>
       </Card>
     </div>
   );

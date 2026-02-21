@@ -1,8 +1,10 @@
-import Journal, { JournalProps } from "@/app/components/JournalEntry";
-export default function JournalPage({ params }: { params: { date: string } }) {
+import Journal from "@/app/components/JournalEntry";
+
+export default async function JournalPage({ params }: { params: Promise<{ date: string }> }) {
+    const resolvedParams = await params;
     return (
-        <div>
-            <Journal params={params} />
+        <div className="p-8">
+            <Journal params={resolvedParams} />
         </div>
     );
 }
